@@ -16,9 +16,9 @@ async function main() {
   console.log(`管理者ユーザーが作成されました: ${admin.email}`);
 
   // Company Profile
-  const companies = [
+  const jobs = [
     {
-      name: "Google",
+      company: "Google",
       industry: "Tech",
       location: "東京",
       position: "ウエブデザイナー",
@@ -28,7 +28,7 @@ async function main() {
       url: "https://www.google.com",
     },
     {
-      name: "Amazon",
+      company: "Amazon",
       industry: "Tech",
       location: "大阪",
       position: "エンジニア",
@@ -38,7 +38,7 @@ async function main() {
       url: "https://www.amazon.com",
     },
     {
-      name: "Facebook",
+      company: "Facebook",
       industry: "Tech",
       location: "福岡",
       position: "UI/UX デザイナー",
@@ -48,7 +48,7 @@ async function main() {
       url: "https://www.facebook.com",
     },
     {
-      name: "Apple",
+      company: "Apple",
       industry: "Tech",
       location: "名古屋",
       position: "プロダクトマネージャー",
@@ -58,7 +58,7 @@ async function main() {
       url: "https://www.apple.com",
     },
     {
-      name: "Tesla",
+      company: "Tesla",
       industry: "Tech",
       location: "東京",
       position: "データサイエンティスト",
@@ -68,7 +68,7 @@ async function main() {
       url: "https://www.tesla.com",
     },
     {
-      name: "Sony",
+      company: "Sony",
       industry: "Tech",
       location: "東京",
       position: "データサイエンティスト",
@@ -78,7 +78,7 @@ async function main() {
       url: "https://www.sony.com",
     },
     {
-      name: "Microsoft",
+      company: "Microsoft",
       industry: "Tech",
       location: "東京",
       position: "データサイエンティスト",
@@ -89,12 +89,11 @@ async function main() {
     },
   ];
 
-  for (const company of companies) {
-    await prisma.company.create({
+  for (const job of jobs) {
+    await prisma.jobs.create({
       data: {
-        ...company,
-        requirement: [],
-      },
+        ...job,
+      }
     });
   }
 

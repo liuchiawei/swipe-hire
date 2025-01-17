@@ -18,7 +18,8 @@ model user {
   profile           profile?
   resume            resume?
   viewed            viewed[]
-  collection        collection[]
+  collected         collected[]
+  uncollected       uncollected[]
 }
 
 model profile {
@@ -40,15 +41,15 @@ model resume {
   userId            Int         @unique @map("user_id")
   skills            Json
   experience        Json
-  bio               String
+  bio               String?
   createdAt         DateTime    @default(now()) @map("created_at")
   updatedAt         DateTime    @updatedAt @map("updated_at")
   user              user        @relation(fields: [userId], references: [id])
 }
 
-model company {
+model jobs {
   id                Int         @id @default(autoincrement())
-  name              String
+  company           String
   industry          String
   location          String
   position          String
@@ -57,23 +58,33 @@ model company {
   url               String?
   requirement       Json
   viewed            viewed[]
-  collection        collection[]
+  collected         collected[]
+  uncollected       uncollected[]
 }
 
 model viewed {
   id                Int       @id @default(autoincrement())
   userId            Int       @map("user_id")
-  companyId         Int       @map("company_id")
+  jobsId            Int       @map("jobs_id")
   viewedAt          DateTime  @default(now()) @map("viewed_at")
   user              user      @relation(fields: [userId], references: [id])
-  company           company   @relation(fields: [companyId], references: [id])
+  jobs              jobs      @relation(fields: [jobsId], references: [id])
 }
 
-model collection {
+model collected {
   id                Int       @id @default(autoincrement())
   userId            Int       @map("user_id")
-  companyId         Int       @map("company_id")
+  jobsId            Int       @map("jobs_id")
   collectedAt       DateTime  @default(now()) @map("collected_at")
   user              user      @relation(fields: [userId], references: [id])
-  company           company   @relation(fields: [companyId], references: [id])
+  jobs              jobs      @relation(fields: [jobsId], references: [id])
+}
+
+model uncollected {
+  id                Int       @id @default(autoincrement())
+  userId            Int       @map("user_id")
+  jobsId            Int       @map("jobs_id")
+  uncollectedAt     DateTime  @default(now()) @map("uncollected_at")
+  user              user      @relation(fields: [userId], references: [id])
+  jobs              jobs      @relation(fields: [jobsId], references: [id])
 }

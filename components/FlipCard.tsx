@@ -4,7 +4,7 @@ import Link from "next/link";
 
 interface Job {
   id: number;
-  name: string;
+  company: string;
   industry: string;
   location: string;
   position: string;
@@ -54,7 +54,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
             fontSize: `${companyFontSize}rem`,
           }}
         >
-          {job.name}
+          {job.company}
         </h1>
         <h2
           className="font-bold mb-4 drop-shadow-lg"
@@ -78,7 +78,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
             <div className="h-4/5 bg-gradient-to-b from-sky-800 to-emerald-400">
               <Image
                 src={`/images/${job.id}.jpg`}
-                alt={job.name}
+                alt={job.company}
                 width={120}
                 height={120}
                 loading="lazy"
@@ -89,7 +89,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
           <div className="h-3/5 px-6 pt-2 pb-4 flex flex-col justify-between">
             <div>
               <h1 className="font-bold text-center text-2xl mb-1">
-                {job.name}
+                {job.company}
               </h1>
               <h2 className="text-neutral-500 text-center text-sm">
                 {job.position}
@@ -118,7 +118,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
             <div className="bg-gradient-to-b from-sky-800 to-emerald-400 h-3/4">
               <Image
                 src={`/images/${job.id}.jpg`}
-                alt={job.name}
+                alt={job.company}
                 width={80}
                 height={80}
                 className="rounded-full w-[80px] h-[80px] shadow-lg object-cover absolute bottom-0 left-1/2 transform -translate-x-1/2"

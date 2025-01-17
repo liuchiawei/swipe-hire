@@ -8,7 +8,7 @@ import { Icon } from "@iconify-icon/react";
 
 interface Job {
   id: number;
-  name: string;
+  company: string;
   industry: string;
   location: string;
   position: string;
@@ -107,7 +107,7 @@ function Swipe() {
             ref={childRefs[index]}
             className="absolute cursor-grab active:cursor-grabbing bg-cover bg-center w-full h-full"
             key={job.id}
-            onSwipe={(dir) => swiped(dir, job.name, index)}
+            onSwipe={(dir) => swiped(dir, job.company, index)}
           >
             <FlipCard job={job} isFlipped={isFlipped} size="lg" />
           </TinderCard>
