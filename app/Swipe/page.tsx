@@ -22,7 +22,10 @@ function Swipe() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const currentIndexRef = useRef(currentIndex);
+  const canGoBack = currentIndex < jobs.length - 1;
+  const canSwipe = currentIndex >= 0;
 
+  // カードデータの初期化
   useEffect(() => {
     async function fetchJobs() {
       try {
@@ -37,6 +40,7 @@ function Swipe() {
     fetchJobs();
   }, []);
 
+  // カードの参照を作成
   const childRefs = useMemo(
     () =>
       Array(jobs.length)
@@ -45,27 +49,41 @@ function Swipe() {
     [jobs]
   );
 
+  // カードのインデックスを更新する関数
   const updateCurrentIndex = (val: number) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
 
-  const canGoBack = currentIndex < jobs.length - 1;
-
-  const canSwipe = currentIndex >= 0;
-
-  // set last direction and decrease current index
+  /** 
+  @function swiped
+  @description: スワイプしたら右、左に判断する関数
+  */
   const swiped = (direction: string, nameToDelete: string, index: number) => {
     updateCurrentIndex(index - 1);
+    if (direction === "right") {
+      console.log("right");
+      // 右にスワイプしたら、データベースに気に入ったものを保存（collect, viewed）
+    } else if (direction === "left") {
+      console.log("left");
+      // 左にスワイプしたら、データベースに気に入らないものを保存（uncollect, viewed）
+    }
   };
 
+  /** 
+  @function swipe
+  @description: クリックすると右、左にスワイプする関数
+  */
   const swipe = async (dir: string) => {
     if (canSwipe && currentIndex < jobs.length) {
       await childRefs[currentIndex]?.current?.swipe(dir); // Swipe the card!
     }
   };
 
-  // increase current index and show card
+  /** 
+  @function goBack
+  @description: 前のカードに戻る関数
+  */
   const goBack = async () => {
     if (!canGoBack) return;
     const newIndex = currentIndex + 1;
@@ -73,6 +91,10 @@ function Swipe() {
     await childRefs[newIndex].current.restoreCard();
   };
 
+  /** 
+  @function handleFlip
+  @description: カードを裏返す関数
+  */
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
