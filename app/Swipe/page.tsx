@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import TinderCard from "react-tinder-card";
-import MatchBtn from "./MatchBtn";
-import { Icon } from "@iconify-icon/react";
 import { API } from "react-tinder-card";
 import FlipCard from "@/components/FlipCard";
+import MatchBtn from "./MatchBtn";
+import { Icon } from "@iconify-icon/react";
 
 interface Job {
   id: number;
@@ -17,90 +17,32 @@ interface Job {
   requirement: string[];
 }
 
-const db: Job[] = [
-  {
-    id: 1,
-    name: "Google",
-    industry: "Tech",
-    location: "東京",
-    position: "ウエブデザイナー",
-    salary: 8000000,
-    description: "Googleのウエブデザイナーの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    id: 2,
-    name: "Amazon",
-    industry: "Tech",
-    location: "大阪",
-    position: "エンジニア",
-    salary: 7000000,
-    description: "Amazonのエンジニアの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    id: 3,
-    name: "Facebook",
-    industry: "Tech",
-    location: "福岡",
-    position: "UI/UX デザイナー",
-    salary: 7500000,
-    description: "FacebookのUI/UX デザイナーの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    id: 4,
-    name: "Apple",
-    industry: "Tech",
-    location: "名古屋",
-    position: "プロダクトマネージャー",
-    salary: 9000000,
-    description: "Appleのプロダクトマネージャーの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    id: 5,
-    name: "Tesla",
-    industry: "Tech",
-    location: "東京",
-    position: "データサイエンティスト",
-    salary: 10000000,
-    description: "Teslaのデータサイエンティストの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    id: 6,
-    name: "Sony",
-    industry: "Tech",
-    location: "東京",
-    position: "データサイエンティスト",
-    salary: 10000000,
-    description: "Sonyのデータサイエンティストの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    id: 7,
-    name: "Microsoft",
-    industry: "Tech",
-    location: "東京",
-    position: "データサイエンティスト",
-    salary: 10000000,
-    description: "Microsoftのデータサイエンティストの求人です。",
-    requirement: ["HTML", "CSS", "JavaScript"],
-  },
-];
-
 function Swipe() {
-  const [currentIndex, setCurrentIndex] = useState(db.length - 1);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const currentIndexRef = useRef(currentIndex);
 
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const response = await fetch("/api/jobs");
+        const fetchedJobs = await response.json();
+        setJobs(fetchedJobs);
+        setCurrentIndex(fetchedJobs.length - 1);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    }
+    fetchJobs();
+  }, []);
+
   const childRefs = useMemo(
     () =>
-      Array(db.length)
+      Array(jobs.length)
         .fill(0)
         .map(() => React.createRef<API>()),
-    []
+    [jobs]
   );
 
   const updateCurrentIndex = (val: number) => {
@@ -108,7 +50,7 @@ function Swipe() {
     currentIndexRef.current = val;
   };
 
-  const canGoBack = currentIndex < db.length - 1;
+  const canGoBack = currentIndex < jobs.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
@@ -117,16 +59,9 @@ function Swipe() {
     updateCurrentIndex(index - 1);
   };
 
-  const outOfFrame = (name: string, idx: number) => {
-    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
-    if (currentIndexRef.current >= idx) {
-      void childRefs[idx].current.restoreCard();
-    }
-  };
-
-  const swipe = async (dir: "left" | "right") => {
-    if (canSwipe && currentIndex < db.length) {
-      await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+  const swipe = async (dir: string) => {
+    if (canSwipe && currentIndex < jobs.length) {
+      await childRefs[currentIndex]?.current?.swipe(dir); // Swipe the card!
     }
   };
 
@@ -145,13 +80,12 @@ function Swipe() {
   return (
     <div className="h-screen w-full overflow-hidden flex flex-col justify-center items-center gap-4">
       <div className="relative w-[297px] h-[420px] flex justify-center items-center z-10 select-none">
-        {db.map((job, index) => (
+        {jobs.map((job, index) => (
           <TinderCard
             ref={childRefs[index]}
             className="absolute cursor-grab active:cursor-grabbing bg-cover bg-center w-full h-full"
             key={job.id}
             onSwipe={(dir) => swiped(dir, job.name, index)}
-            onCardLeftScreen={() => outOfFrame(job.name, index)}
           >
             <FlipCard job={job} isFlipped={isFlipped} size="lg" />
           </TinderCard>

@@ -34,7 +34,7 @@ export default function RootLayout({
         ) : (
           <>
             <Nav />
-            <main>{children}</main>
+            <main className="bg-neutral-100">{children}</main>
           </>
         )}
       </body>
