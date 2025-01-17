@@ -6,7 +6,7 @@ import { useState } from "react";
 
 interface Job {
   id: number;
-  name: string;
+  company: string;
   industry: string;
   location: string;
   position: string;
@@ -51,7 +51,7 @@ export default function Collections() {
 const db: (Job)[] = [
   {
     id: 1,
-    name: "Google",
+    company: "Google",
     industry: "Tech",
     location: "東京",
     position: "ウエブデザイナー",
@@ -62,7 +62,7 @@ const db: (Job)[] = [
   },
   {
     id: 2,
-    name: "Amazon",
+    company: "Amazon",
     industry: "Tech",
     location: "大阪",
     position: "エンジニア",
@@ -73,7 +73,7 @@ const db: (Job)[] = [
   },
   {
     id: 3,
-    name: "Facebook",
+    company: "Facebook",
     industry: "Tech",
     location: "福岡",
     position: "UI/UX デザイナー",
@@ -84,7 +84,7 @@ const db: (Job)[] = [
   },
   {
     id: 4,
-    name: "Apple",
+    company: "Apple",
     industry: "Tech",
     location: "名古屋",
     position: "プロダクトマネージャー",
@@ -95,7 +95,7 @@ const db: (Job)[] = [
   },
   {
     id: 5,
-    name: "Tesla",
+    company: "Tesla",
     industry: "Tech",
     location: "東京",
     position: "データサイエンティスト",
@@ -106,7 +106,7 @@ const db: (Job)[] = [
   },
   {
     id: 6,
-    name: "Sony",
+    company: "Sony",
     industry: "Tech",
     location: "東京",
     position: "データサイエンティスト",
@@ -117,7 +117,7 @@ const db: (Job)[] = [
   },
   {
     id: 7,
-    name: "Microsoft",
+    company: "Microsoft",
     industry: "Tech",
     location: "東京",
     position: "データサイエンティスト",
