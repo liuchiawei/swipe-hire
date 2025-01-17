@@ -56,21 +56,6 @@ function Swipe() {
   };
 
   /** 
-  @function swiped
-  @description: スワイプしたら右、左に判断する関数
-  */
-  const swiped = (direction: string, nameToDelete: string, index: number) => {
-    updateCurrentIndex(index - 1);
-    if (direction === "right") {
-      console.log("right");
-      // 右にスワイプしたら、データベースに気に入ったものを保存（collect, viewed）
-    } else if (direction === "left") {
-      console.log("left");
-      // 左にスワイプしたら、データベースに気に入らないものを保存（uncollect, viewed）
-    }
-  };
-
-  /** 
   @function swipe
   @description: クリックすると右、左にスワイプする関数
   */
@@ -79,6 +64,50 @@ function Swipe() {
       await childRefs[currentIndex]?.current?.swipe(dir); // Swipe the card!
     }
   };
+
+  /** 
+  @function swiped
+  @description: スワイプしたら右、左に判断する関数
+  */
+  const swiped = (direction: string, nameToDelete: string, index: number) => {
+    updateCurrentIndex(index - 1);
+    if (direction === "right") {
+      console.log("right");
+      // 右にスワイプしたら、データベースに気に入ったものを保存（collected, viewed）
+      // viewed()
+      // collected()
+    } else if (direction === "left") {
+      console.log("left");
+      // 左にスワイプしたら、データベースに気に入らないものを保存（uncollected, viewed）
+      // viewed()
+      // uncollected()
+    }
+  };
+
+  // TODO: swiped()の中にviewed(), collected(), uncollected()を実装する
+  /** 
+  @function viewed
+  @description: データベースにviewedを保存する関数
+  */
+  // const viewed = async () => {
+  //   // データベースにviewedを保存する
+  // }
+
+  /** 
+  @function collected
+  @description: データベースにcollectedを保存する関数
+  */
+  // const collected = async () => {
+  //   // データベースにcollectedを保存する
+  // }
+
+  /** 
+  @function uncollected
+  @description: データベースにuncollectedを保存する関数
+  */
+  // const uncollected = async () => {
+  //   // データベースにuncollectedを保存する
+  // }
 
   /** 
   @function goBack
