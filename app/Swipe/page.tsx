@@ -8,69 +8,85 @@ import FlipCard from "@/components/FlipCard";
 
 interface Job {
   id: number;
-  title: string;
-  company: string;
+  name: string;
+  industry: string;
   location: string;
+  position: string;
   salary: number;
   description: string;
+  requirement: string[];
 }
 
 const db: Job[] = [
   {
     id: 1,
-    title: "ウエブデザイナー",
-    company: "Google",
+    name: "Google",
+    industry: "Tech",
     location: "東京",
+    position: "ウエブデザイナー",
     salary: 8000000,
     description: "Googleのウエブデザイナーの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 2,
-    title: "エンジニア",
-    company: "Amazon",
+    name: "Amazon",
+    industry: "Tech",
     location: "大阪",
+    position: "エンジニア",
     salary: 7000000,
     description: "Amazonのエンジニアの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 3,
-    title: "UI/UX デザイナー",
-    company: "Facebook",
+    name: "Facebook",
+    industry: "Tech",
     location: "福岡",
+    position: "UI/UX デザイナー",
     salary: 7500000,
     description: "FacebookのUI/UX デザイナーの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 4,
-    title: "プロダクトマネージャー",
-    company: "Apple",
+    name: "Apple",
+    industry: "Tech",
     location: "名古屋",
+    position: "プロダクトマネージャー",
     salary: 9000000,
     description: "Appleのプロダクトマネージャーの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 5,
-    title: "データサイエンティスト",
-    company: "Tesla",
+    name: "Tesla",
+    industry: "Tech",
     location: "東京",
+    position: "データサイエンティスト",
     salary: 10000000,
     description: "Teslaのデータサイエンティストの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 6,
-    title: "データサイエンティスト",
-    company: "Sony",
+    name: "Sony",
+    industry: "Tech",
     location: "東京",
+    position: "データサイエンティスト",
     salary: 10000000,
     description: "Sonyのデータサイエンティストの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 7,
-    title: "データサイエンティスト",
-    company: "Microsoft",
+    name: "Microsoft",
+    industry: "Tech",
     location: "東京",
+    position: "データサイエンティスト",
     salary: 10000000,
     description: "Microsoftのデータサイエンティストの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
   },
 ];
 
@@ -134,8 +150,8 @@ function Swipe() {
             ref={childRefs[index]}
             className="absolute cursor-grab active:cursor-grabbing bg-cover bg-center w-full h-full"
             key={job.id}
-            onSwipe={(dir) => swiped(dir, job.title, index)}
-            onCardLeftScreen={() => outOfFrame(job.title, index)}
+            onSwipe={(dir) => swiped(dir, job.name, index)}
+            onCardLeftScreen={() => outOfFrame(job.name, index)}
           >
             <FlipCard job={job} isFlipped={isFlipped} size="lg" />
           </TinderCard>
