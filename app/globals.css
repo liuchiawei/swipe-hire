@@ -9,6 +9,7 @@
   --color-accent: hsl(210, 100%, 10%);
 }
 
+/* mui variables */
 @layer base {
   :root {
     --background: 0 0% 100%;

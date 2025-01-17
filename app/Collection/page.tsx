@@ -6,11 +6,13 @@ import { useState } from "react";
 
 interface Job {
   id: number;
-  title: string;
-  company: string;
+  name: string;
+  industry: string;
   location: string;
+  position: string;
   salary: number;
   description: string;
+  requirement: string[];
   isFlipped: boolean;
 }
 
@@ -49,65 +51,79 @@ export default function Collections() {
 const db: (Job)[] = [
   {
     id: 1,
-    title: "ウエブデザイナー",
-    company: "Google",
+    name: "Google",
+    industry: "Tech",
     location: "東京",
+    position: "ウエブデザイナー",
     salary: 8000000,
     description: "Googleのウエブデザイナーの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
   {
     id: 2,
-    title: "エンジニア",
-    company: "Amazon",
+    name: "Amazon",
+    industry: "Tech",
     location: "大阪",
+    position: "エンジニア",
     salary: 7000000,
     description: "Amazonのエンジニアの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
   {
     id: 3,
-    title: "UI/UX デザイナー",
-    company: "Facebook",
+    name: "Facebook",
+    industry: "Tech",
     location: "福岡",
+    position: "UI/UX デザイナー",
     salary: 7500000,
     description: "FacebookのUI/UX デザイナーの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
   {
     id: 4,
-    title: "プロダクトマネージャー",
-    company: "Apple",
+    name: "Apple",
+    industry: "Tech",
     location: "名古屋",
+    position: "プロダクトマネージャー",
     salary: 9000000,
     description: "Appleのプロダクトマネージャーの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
   {
     id: 5,
-    title: "データサイエンティスト",
-    company: "Tesla",
+    name: "Tesla",
+    industry: "Tech",
     location: "東京",
+    position: "データサイエンティスト",
     salary: 10000000,
     description: "Teslaのデータサイエンティストの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
   {
     id: 6,
-    title: "データサイエンティスト",
-    company: "Sony",
+    name: "Sony",
+    industry: "Tech",
     location: "東京",
+    position: "データサイエンティスト",
     salary: 10000000,
     description: "Sonyのデータサイエンティストの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
   {
     id: 7,
-    title: "データサイエンティスト",
-    company: "Microsoft",
+    name: "Microsoft",
+    industry: "Tech",
     location: "東京",
+    position: "データサイエンティスト",
     salary: 10000000,
     description: "Microsoftのデータサイエンティストの求人です。",
+    requirement: ["HTML", "CSS", "JavaScript"],
     isFlipped: false,
   },
 ];

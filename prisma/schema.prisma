@@ -10,71 +10,70 @@ datasource db {
 }
 
 model user {
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  password      String
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
-
-  profile            profile? @relation("UserProfile")
-  viewed             viewed[]
-  collection         collection[]
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  password          String
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  profile           profile?
+  resume            resume?
+  viewed            viewed[]
+  collection        collection[]
 }
 
 model profile {
-  id          Int         @id @default(autoincrement())
-  user_id     Int         @unique
-  user        user        @relation("UserProfile", fields: [user_id], references: [id])
-
-  name                String
-  date_of_birth       String
-  gender              String
-  location            String
-  education           String
-  avatar              String
-  created_at          DateTime  @default(now())
-  updated_at          DateTime  @updatedAt
+  id                Int         @id @default(autoincrement())
+  userId            Int         @unique @map("user_id")
+  name              String
+  birth             String
+  gender            String
+  location          String
+  education         String
+  avatar            String
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("updated_at")
+  user              user        @relation(fields: [userId], references: [id])
 }
 
 model resume {
-  id          Int         @id @default(autoincrement())
-  user_id     Int         @unique
-  user        user        @relation(fields: [user_id], references: [id])
-
-  resume              Json
-  created_at          DateTime  @default(now())
-  updated_at          DateTime  @updatedAt
+  id                Int         @id @default(autoincrement())
+  userId            Int         @unique @map("user_id")
+  skills            Json
+  experience        Json
+  bio               String
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("updated_at")
+  user              user        @relation(fields: [userId], references: [id])
 }
 
 model company {
-  id          Int         @id @default(autoincrement())
-
-  name               String
-  industry           String
-  description        String?
-  location           String
-  position           String
-  requirement        Json
-
-  viewed             viewed[]
-  collection         collection[]
+  id                Int         @id @default(autoincrement())
+  name              String
+  industry          String
+  location          String
+  position          String
+  salary            Int
+  description       String?
+  url               String?
+  requirement       Json
+  viewed            viewed[]
+  collection        collection[]
 }
 
 model viewed {
-  id          Int       @id @default(autoincrement())
-  user_id     Int
-  user        user      @relation("UserViewed", fields: [user_id], references: [id])
-  company_id  Int
-  company     company   @relation(fields: [company_id], references: [id])
-  viewed_at   DateTime  @default(now())
+  id                Int       @id @default(autoincrement())
+  userId            Int       @map("user_id")
+  companyId         Int       @map("company_id")
+  viewedAt          DateTime  @default(now()) @map("viewed_at")
+  user              user      @relation(fields: [userId], references: [id])
+  company           company   @relation(fields: [companyId], references: [id])
 }
 
 model collection {
-  id          Int       @id @default(autoincrement())
-  user_id     Int
-  user        user      @relation("UserCollection", fields: [user_id], references: [id])
-  company_id  Int
-  company     company   @relation(fields: [company_id], references: [id])
-  collected_at DateTime @default(now())
-  updated_at   DateTime  @updatedAt
+  id                Int       @id @default(autoincrement())
+  userId            Int       @map("user_id")
+  companyId         Int       @map("company_id")
+  collectedAt       DateTime  @default(now()) @map("collected_at")
+  user              user      @relation(fields: [userId], references: [id])
+  company           company   @relation(fields: [companyId], references: [id])
 }

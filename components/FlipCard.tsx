@@ -4,11 +4,13 @@ import Link from "next/link";
 
 interface Job {
   id: number;
-  company: string;
-  title: string;
+  name: string;
+  industry: string;
   location: string;
+  position: string;
   salary: number;
   description: string;
+  requirement: string[];
 }
 
 interface FlipCardProps {
@@ -45,13 +47,14 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
         {size === "lg" ? (
           <div className="w-full h-full bg-gradient-to-t from-black/90 via-black/20 to-transparent absolute top-0 left-0 rounded-3xl z-0"></div>
         ) : null}
+        <h3 className="text-sm text-neutral-100">{job.industry}</h3>
         <h1
           className="font-bold mb-2 drop-shadow-lg"
           style={{
             fontSize: `${companyFontSize}rem`,
           }}
         >
-          {job.company}
+          {job.name}
         </h1>
         <h2
           className="font-bold mb-4 drop-shadow-lg"
@@ -59,7 +62,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
             fontSize: `${titleFontSize}rem`,
           }}
         >
-          {job.title}
+          {job.position}
         </h2>
         <p className="mb-2 drop-shadow-lg">{job.location}</p>
       </div>
@@ -75,7 +78,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
             <div className="h-4/5 bg-gradient-to-b from-sky-800 to-emerald-400">
               <Image
                 src={`/images/${job.id}.jpg`}
-                alt={job.title}
+                alt={job.name}
                 width={120}
                 height={120}
                 loading="lazy"
@@ -86,10 +89,10 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
           <div className="h-3/5 px-6 pt-2 pb-4 flex flex-col justify-between">
             <div>
               <h1 className="font-bold text-center text-2xl mb-1">
-                {job.company}
+                {job.name}
               </h1>
               <h2 className="text-neutral-500 text-center text-sm">
-                {job.title}
+                {job.position}
               </h2>
             </div>
             <div className="flex flex-col justify-between text-sm">
@@ -115,7 +118,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
             <div className="bg-gradient-to-b from-sky-800 to-emerald-400 h-3/4">
               <Image
                 src={`/images/${job.id}.jpg`}
-                alt={job.title}
+                alt={job.name}
                 width={80}
                 height={80}
                 className="rounded-full w-[80px] h-[80px] shadow-lg object-cover absolute bottom-0 left-1/2 transform -translate-x-1/2"
