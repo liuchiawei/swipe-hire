@@ -100,7 +100,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
               <p className="text-neutral-500">{job.description}</p>
             </div>
             <Link
-              href={`/Profile/${job.id}`}
+              href={`/Jobs/${job.id}`}
               className="bg-primary text-white text-center px-4 py-2 rounded-full hover:bg-primary/90 hover:shadow-md transition-all duration-200"
             >
               詳細を見る

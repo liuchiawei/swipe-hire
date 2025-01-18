@@ -36,7 +36,7 @@ export const BentoGridItem = ({
 }) => {
   return (
     <Link
-      href={`/Profile/${id}`}
+      href={`/Jobs/${id}`}
       className={cn(
         "rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:bg-black bg-white justify-between flex flex-col hover:-translate-y-2 overflow-hidden",
         className

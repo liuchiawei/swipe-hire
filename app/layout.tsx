@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/nav";
+// import { ThemeProvider } from "@/lib/ThemeProvider";
 
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"], 
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 const robotoMono = Roboto_Mono({
@@ -29,14 +30,18 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
-        {home ? (
-          <main>{children}</main>
-        ) : (
-          <>
-            <Nav />
-            <main className="bg-neutral-100">{children}</main>
-          </>
-        )}
+        {/* <ThemeProvider> */}
+          {home ? (
+            <main>
+              {children}
+            </main>
+          ) : (
+            <>
+              <Nav />
+              <main className="bg-neutral-200">{children}</main>
+            </>
+          )}
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

@@ -17,12 +17,13 @@ interface Job {
   requirement: string[];
 }
 
-function Swipe() {
-  const [jobs, setJobs] = useState<Job[]>([]);
+export default function Swipe() {
+  const [jobs, setJobs] = useState<Job[] | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const currentIndexRef = useRef(currentIndex);
-  const canGoBack = currentIndex < jobs.length - 1;
+  const canGoBack = currentIndex < (jobs?.length ?? 0) - 1;
   const canSwipe = currentIndex >= 0;
 
   // カードデータの初期化
@@ -38,16 +39,16 @@ function Swipe() {
       }
     }
     fetchJobs();
+    setIsMounted(true);
   }, []);
 
   // カードの参照を作成
-  const childRefs = useMemo(
-    () =>
-      Array(jobs.length)
-        .fill(0)
-        .map(() => React.createRef<API>()),
-    [jobs]
-  );
+  const childRefs = useMemo(() => {
+    if (!jobs) return [];
+    return Array(jobs.length)
+      .fill(0)
+      .map(() => React.createRef<API>());
+  }, [jobs]);
 
   // カードのインデックスを更新する関数
   const updateCurrentIndex = (val: number) => {
@@ -60,7 +61,9 @@ function Swipe() {
   @description: クリックすると右、左にスワイプする関数
   */
   const swipe = async (dir: string) => {
-    if (canSwipe && currentIndex < jobs.length) {
+    if (!jobs || !canSwipe || currentIndex >= jobs.length) {
+      return;
+    } else if (canSwipe && currentIndex < jobs.length) {
       await childRefs[currentIndex]?.current?.swipe(dir); // Swipe the card!
     }
   };
@@ -70,17 +73,21 @@ function Swipe() {
   @description: スワイプしたら右、左に判断する関数
   */
   const swiped = (direction: string, nameToDelete: string, index: number) => {
-    updateCurrentIndex(index - 1);
-    if (direction === "right") {
-      console.log("right");
-      // 右にスワイプしたら、データベースに気に入ったものを保存（collected, viewed）
-      // viewed()
-      // collected()
-    } else if (direction === "left") {
-      console.log("left");
-      // 左にスワイプしたら、データベースに気に入らないものを保存（uncollected, viewed）
-      // viewed()
-      // uncollected()
+    if (!jobs || !canSwipe || currentIndex >= jobs.length) {
+      return;
+    } else if (canSwipe && currentIndex < jobs.length) {
+      updateCurrentIndex(index - 1);
+      if (direction === "right") {
+        console.log("right");
+        // 右にスワイプしたら、データベースに気に入ったものを保存（collected, viewed）
+        // viewed()
+        // collected()
+      } else if (direction === "left") {
+        console.log("left");
+        // 左にスワイプしたら、データベースに気に入らないものを保存（uncollected, viewed）
+        // viewed()
+        // uncollected()
+      }
     }
   };
 
@@ -128,19 +135,24 @@ function Swipe() {
     setIsFlipped(!isFlipped);
   };
 
+  // TODO: データがない場合はローディング画面を表示する
+  if (!isMounted || !jobs) return <div>Loading...</div>;
+
   return (
     <div className="h-screen w-full overflow-hidden flex flex-col justify-center items-center gap-4">
       <div className="relative w-[297px] h-[420px] flex justify-center items-center z-10 select-none">
-        {jobs.map((job, index) => (
-          <TinderCard
-            ref={childRefs[index]}
-            className="absolute cursor-grab active:cursor-grabbing bg-cover bg-center w-full h-full"
-            key={job.id}
-            onSwipe={(dir) => swiped(dir, job.company, index)}
-          >
-            <FlipCard job={job} isFlipped={isFlipped} size="lg" />
-          </TinderCard>
-        ))}
+        {isMounted &&
+          jobs &&
+          jobs.map((job, index) => (
+            <TinderCard
+              ref={childRefs[index]}
+              className="absolute cursor-grab active:cursor-grabbing bg-cover bg-center w-full h-full"
+              key={job.id}
+              onSwipe={(dir) => swiped(dir, job.company, index)}
+            >
+              <FlipCard job={job} isFlipped={isFlipped} size="lg" />
+            </TinderCard>
+          ))}
       </div>
       <div className="flex gap-4 z-0">
         <MatchBtn
@@ -176,5 +188,3 @@ function Swipe() {
     </div>
   );
 }
-
-export default Swipe;
