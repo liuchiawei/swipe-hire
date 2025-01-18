@@ -5,6 +5,7 @@ import { API } from "react-tinder-card";
 import FlipCard from "@/components/FlipCard";
 import MatchBtn from "./MatchBtn";
 import { Icon } from "@iconify-icon/react";
+import { Loader2 } from "lucide-react";
 
 interface Job {
   id: number;
@@ -135,13 +136,11 @@ export default function Swipe() {
     setIsFlipped(!isFlipped);
   };
 
-  // TODO: データがない場合はローディング画面を表示する
-  if (!isMounted || !jobs) return <div>Loading...</div>;
-
+  
   return (
     <div className="h-screen w-full overflow-hidden flex flex-col justify-center items-center gap-4">
       <div className="relative w-[297px] h-[420px] flex justify-center items-center z-10 select-none">
-        {isMounted &&
+        {isMounted ? (
           jobs &&
           jobs.map((job, index) => (
             <TinderCard
@@ -152,7 +151,11 @@ export default function Swipe() {
             >
               <FlipCard job={job} isFlipped={isFlipped} size="lg" />
             </TinderCard>
-          ))}
+          ))
+        ) : (
+          // TODO: データがない場合はローディング画面を表示する
+          <Loader2 className="animate-spin text-neutral-700" />
+        )}
       </div>
       <div className="flex gap-4 z-0">
         <MatchBtn

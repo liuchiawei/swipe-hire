@@ -38,7 +38,7 @@ export default function RootLayout({
           ) : (
             <>
               <Nav />
-              <main className="bg-neutral-200">{children}</main>
+              <main className="bg-neutral-200 min-h-screen">{children}</main>
             </>
           )}
         {/* </ThemeProvider> */}

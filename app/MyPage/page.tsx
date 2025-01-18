@@ -1,6 +1,28 @@
+"use client";
 import Avatar from "@mui/material/Avatar";
+import { useState, useEffect } from "react";
 
 export default function MyPage() {
+  const [user, setUser] = useState<User | null>(null);
+  const userId = 1; // default user id for testing
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await fetch(`/api/user/${userId}`);
+        const data = await response.json();
+        if (!data.error) {
+          setUser(data);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    }
+    fetchUserData();
+  }, [userId]);
+
+  if (!user) return <div className="text-neutral-700">Loading...</div>;
+
   return (
     <div className="w-full h-full">
       <div className="w-full h-[320px] relative">
