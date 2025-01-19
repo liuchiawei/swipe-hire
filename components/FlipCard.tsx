@@ -45,7 +45,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
         }}
       >
         {size === "lg" ? (
-          <div className="w-full h-full bg-gradient-to-t from-black/90 via-black/20 to-transparent absolute top-0 left-0 rounded-3xl z-0"></div>
+          <div className="w-full h-full bg-linear-to-t from-black/90 via-black/20 to-transparent absolute top-0 left-0 rounded-3xl z-0"></div>
         ) : null}
         <h3 className="text-sm text-neutral-100">{job.industry}</h3>
         <h1
@@ -75,7 +75,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
           }}
         >
           <div className="h-2/5 relative">
-            <div className="h-4/5 bg-gradient-to-b from-sky-800 to-emerald-400">
+            <div className="h-4/5 bg-linear-to-b from-sky-800 to-emerald-400">
               <Image
                 src={`/images/${job.id}.jpg`}
                 alt={job.company}
@@ -115,7 +115,7 @@ export default function FlipCard({ job, isFlipped, size }: FlipCardProps) {
           }}
         >
           <div className="w-full h-2/5 relative">
-            <div className="bg-gradient-to-b from-sky-800 to-emerald-400 h-3/4">
+            <div className="bg-linear-to-b from-sky-800 to-emerald-400 h-3/4">
               <Image
                 src={`/images/${job.id}.jpg`}
                 alt={job.company}

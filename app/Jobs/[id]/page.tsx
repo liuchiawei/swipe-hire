@@ -31,7 +31,7 @@ export default async function JobPage({ params }: JobPageProps) {
             backgroundImage: `url('/images/${job.id}.jpg')`,
           }}
         >
-          <div className="w-full h-full bg-gradient-to-t from-black/90 via-black/20 to-transparent absolute top-0 left-0 rounded-3xl z-0" />
+          <div className="w-full h-full bg-linear-to-t from-black/90 via-black/20 to-transparent absolute top-0 left-0 rounded-3xl z-0" />
           <div className="absolute bottom-0 left-0 p-6">
             <h3 className="text-sm text-neutral-300">{job.industry}</h3>
             <h1 className="font-bold mb-2 drop-shadow-lg text-3xl text-white">
